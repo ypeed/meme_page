@@ -37,12 +37,12 @@
       </div>
 
       <div>
-        <button @click="login()" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button @click="login()"  :disabled="errorMsg != ''" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Log in
         </button>
       </div>
       <div>
-        <p class="mt-6 text-center text-red-600">
+        <p class="mt-6 text-center text-pink-600">
           {{ errorMsg }}
         </p>
       </div>
@@ -84,12 +84,12 @@
       </div>
 
       <div>
-        <button @click="register()" prevent type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button @click="register()" :disabled="errorMsg != ''"  prevent type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Sign up
         </button>
       </div>
       <div>
-        <p class="mt-6 text-center text-red-600">
+        <p class="mt-6 text-center text-pink-600">
           {{ errorMsg }}
         </p>
       </div>
@@ -115,11 +115,15 @@ export default {
         password: ""
       },
       showLoginForm: true,
-      errorMsg: ""
+      errorMsg: "",
     }
   },
   methods: {
     async login() {
+      if(this.LoginForm.email == "" || this.LoginForm.password == ""){
+        return
+      }
+      console.log('LOGING')
       const respose = await AuthService.register({ email: this.LoginForm.email, password: this.LoginForm.password})
       if(respose.data.res === "200 - OK"){
         fb.auth.signInWithEmailAndPassword(this.LoginForm.email, this.LoginForm.password)
@@ -136,6 +140,10 @@ export default {
     },
 
     async register() {
+      if(this.RegisterForm.email == "" || this.RegisterForm.password == "" || this.RegisterForm.name == ""){
+        return
+      }
+      console.log("test")
       const respose = await AuthService.register({ email: this.RegisterForm.email, password: this.RegisterForm.password})
       if(respose.data.res === "200 - OK"){
         try{
@@ -162,6 +170,66 @@ export default {
 
     toggleForm() {
       this.showLoginForm = !this.showLoginForm;
+    },
+  },
+  watch:{
+    "LoginForm.email": function(newValue) {
+      //eslint-disable-next-line
+      let res = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      let valid = res.test(String(newValue).toLowerCase());
+      if(!valid){
+        this.errorMsg = "Email is not correct"
+      }else{
+        this.errorMsg = ""
+      }
+    },
+    "LoginForm.password": function(newValue) {
+      //eslint-disable-next-line
+      let lenght = /^.*(?=.{8,100}).*$/;
+      let low = /^.*(?=.*[a-z]).*$/
+      let upper = /^.*(?=.*[A-Z]).*$/
+      let dig = /^.*(?=.*\d).*$/
+
+      if(!lenght.test(String(newValue))){
+        this.errorMsg = "Password must be least 8 char long"
+      }else if(!low.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one lowercase char"
+      }else if(!upper.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one upperercase char"
+      }else if(!dig.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one digit"
+      }else{
+        this.errorMsg = ""
+      }
+    },
+    "RegisterForm.password": function(newValue) {
+      //eslint-disable-next-line
+      let lenght = /^.*(?=.{8,100}).*$/;
+      let low = /^.*(?=.*[a-z]).*$/
+      let upper = /^.*(?=.*[A-Z]).*$/
+      let dig = /^.*(?=.*\d).*$/
+
+      if(!lenght.test(String(newValue))){
+        this.errorMsg = "Password must be least 8 char long"
+      }else if(!low.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one lowercase char"
+      }else if(!upper.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one upperercase char"
+      }else if(!dig.test(String(newValue))){
+        this.errorMsg = "Password must contain at least one digit"
+      }else{
+        this.errorMsg = ""
+      }
+    },
+    "RegisterForm.email": function(newValue) {
+      //eslint-disable-next-line
+      let res = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      let valid = res.test(String(newValue).toLowerCase());
+      if(!valid){
+        this.errorMsg = "Email is not correct"
+      }else{
+        this.errorMsg = ""
+      }
     },
   }
 }
