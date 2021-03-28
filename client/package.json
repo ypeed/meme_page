@@ -14,7 +14,8 @@
     "dotenv": "^8.2.0",
     "firebase": "^8.3.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue-svg-transition": "^0.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.4",

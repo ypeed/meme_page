@@ -18,6 +18,22 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/liked',
+    name: 'Liked',
+    component: () => import('../views/LikedMemes.vue'),
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
+    path: '/bookmark',
+    name: 'Bookmark',
+    component: () => import('../views/Bookmarks.vue'),
+    meta: {
+      authRequired: true,
+    },
   }
 ]
 

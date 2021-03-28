@@ -1,10 +1,26 @@
 <template>
-  <h1>hello from home</h1>
+  <div class="bg-gray-100">
+  <Navbar>
+
+  </Navbar>
+  <div class="py-32 text-center">
+    <h2 class="font-extrabold text-6xl">This is content</h2>
+  </div>
+  </div>
 </template>
 
 <script>
-export default {
+import Navbar from '../components/Navbar'
 
+export default {
+  data() {
+    return {
+
+    }
+  },
+  components: {
+    Navbar,
+  }
 }
 </script>
 

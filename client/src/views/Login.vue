@@ -123,7 +123,6 @@ export default {
       if(this.LoginForm.email == "" || this.LoginForm.password == ""){
         return
       }
-      console.log('LOGING')
       const respose = await AuthService.register({ email: this.LoginForm.email, password: this.LoginForm.password})
       if(respose.data.res === "200 - OK"){
         fb.auth.signInWithEmailAndPassword(this.LoginForm.email, this.LoginForm.password)
