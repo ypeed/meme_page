@@ -1,8 +1,7 @@
 <template>
-  <nav class="bg-white border border-gray-200">
-    <div class=" max-w-5xl mx-auto">
+  <nav class="h-max md:h-14 w-full fixed top-0 z-50 bg-white border border-gray-200">
+    <div class="max-w-5xl mx-auto">
       <div class="flex justify-between">
-
         <div>
           <router-link to="/" class="flex items-center py-3 px-3 text-gray-800">
             <svg class="h-8 w-8 mr-2 text-pink-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
